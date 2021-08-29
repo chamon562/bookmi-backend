@@ -11,6 +11,8 @@ let corsOptions = {
 
 app.use(cors(corsOptions));
 
+// pars request of content-type - application/json
+app.use(bodyParser.json())
 
 
 app.listen(8318, () =>{
