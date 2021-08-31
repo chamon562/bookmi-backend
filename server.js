@@ -22,6 +22,8 @@ app.get("/", (req, res) => {
     res.json({ message: "Welecom to application" });
 })
 
-app.listen(8318, () => {
-    console.log("Backend server is running");
+// set port, listen for requests
+const PORT = process.env.PORT || 8318;
+app.listen(PORT, () => {
+    console.log(`Backend server is running on port ${PORT}`);
 })
