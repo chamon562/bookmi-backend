@@ -49,3 +49,54 @@ Open browser with url http:localhost:8318, you will see
 "message": "Welecom to application"
 }
 ```
+
+## Create User and Role data models
+- mkdir models and inside create role.model.js and user.model.js
+- code inside role.model.js
+```js 
+// create User and ROle data model 
+const mongoose = require("mongoose");
+
+const Role = mongoose.model(
+    "Role",
+    new mongoose.Schema({
+        name: String
+    })
+);
+
+module.exports = Role;
+
+```
+- Code inside user.model.js
+```js
+const mongoose = require("mongoose");
+
+const User = mongoose.model(
+    "User",
+    new mongoose.Schema({
+        username: String,
+        email: String,
+        password: String,
+        roles: [
+            {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Role"
+            }
+        ]
+    })
+)
+
+module.exports = User;
+```
+These Mongoose Models represent users & roles collection in MongoDB database. User object will have a roles array that contains ids in roles collection as reference.
+
+This kind is called Reference Data Models or Normaliation. 
+
+After initializing Mongoose, we don't need to write CRUD functions because Mongoose supports all of them: 
+- create a new User: object.save()
+- find a User by id: User.findById(id)
+- find User by email: User.findByOne({email: ...})
+- find User by username: User.findOne({username: ...})
+- find all Roles which name is given roles array: Role.find({ name: {$in: roles}})
+
+These functions will be used in our Controllers and Middlewares. 
